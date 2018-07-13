@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J BaTiO3_TEST          #job name
+#SBATCH -o BaTiO3_TEST.o%j      #output file name
+#SBATCH -e BaTiO3_TEST.e%j      #error file name
+#SBATCH -q debug        #queue (QOS) -- degub, regular, premium
+#SBATCH -N 2            #set number of nodes
+#SBATCH -t 00:30:00     #time limit (max: debug-30min; regular/premium-48hrs) 
+#SBATCH -A m3179        #set repository
+#SBATCH -C haswell      #using Cori Haswell nodes (haswell) or KNL (knl, quad, cache)
+#SBATCH --mail-type=ALL         #set email options
+#SBATCH --mail-user=dhickoxyoung@u.northwestern.edu
+
+module load vasp/5.4.4
+
+srun -n 64 vasp_std  
+
+#Set number of processors appropriately (up to 32 proc/node on haswell, 24 on edison, 68 on KNL (option on Cori only))
